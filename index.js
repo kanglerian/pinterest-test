@@ -1,19 +1,21 @@
 const express = require('express');
 const multer = require('multer');
+const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
 const storage = multer.diskStorage({
-  dest: (req, file, cb) => {
-    cb(null, 'uploads/');
+  destination: (req, file, cb) => {
+    cb(null, 'uploads');
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().getTime() + '-' + file.originalname);
+    cb(null, new Date().getTime() + '-' + file.originalname)
   }
-});
+})
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage })
 
+app.use(bodyParser.json());
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
