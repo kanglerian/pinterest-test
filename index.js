@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import { addPost } from './controllers/Post.js'
+import { addPost, deletePost } from './controllers/Post.js'
 
 /* resolve path __dirname */
 import path from 'path';
@@ -33,5 +33,6 @@ app.get('/post', (req, res) => {
 });
 
 app.use('/addPost', upload.single('photo'), addPost)
+app.use('/delete/:id', deletePost)
 
 app.listen(port, () => console.log(`Apps run on http://localhost:${port}`));
