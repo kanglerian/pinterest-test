@@ -1,8 +1,17 @@
 import express from 'express';
-import { addPost, deletePost, getPost, getPosts, updatePost } from './controllers/Post.js'
-import upload from './middlewares/uploadImage.js';
 const app = express();
 const port = 3000;
+
+import expressLayouts from 'express-ejs-layouts';
+import methodOverride from 'method-override';
+
+/* load controllers */
+import { addPost, deletePost, getPost, getPosts, updatePost } from './controllers/Post.js'
+/* end */
+
+/* upload middlewares */
+import upload from './middlewares/uploadImage.js';
+/* end */
 
 /* resolve path __dirname */
 import path from 'path';
@@ -12,12 +21,18 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 /* end */
 
-app.use(express.static('public'));
+app.set('view engine', 'ejs');
+app.use(expressLayouts);
 app.use(express.json());
+app.use(express.static('public'));
+app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/post', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+app.get('/', (req, res) => {
+  res.render('index', {
+    layout: 'layouts/main',
+    title: 'Pinterest'
+  });
 });
 
 app.use('/update/:id', upload.single('photo'), updatePost)
