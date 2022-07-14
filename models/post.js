@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize/types";
+import { Sequelize } from 'sequelize';
 import db from '../config/database.js';
 
 const { DataTypes } = Sequelize;
@@ -10,11 +10,16 @@ const Posts = db.define('post', {
         autoIncrement: true
     },
     title: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: true
     },
     photo: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: true
     }
+},{
+    freezeTableName: true,
+    timestamps: false
 });
 
 export default Posts;

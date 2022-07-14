@@ -1,8 +1,11 @@
-import { Sequelize } from "sequelize/types";
+import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize('pinterest', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
+    define: {
+      timestamps: false
+    }
 });
 
 try {
